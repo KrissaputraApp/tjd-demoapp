@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Talenta Java Design — Lapangan</title>
+<title>Talenta Java Design Project App</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -329,7 +329,7 @@
     <div class="login-brand">
       <div class="login-mark">TJD</div>
       <div class="login-title">Talenta Java Design</div>
-      <div class="login-sub">Aplikasi Lapangan — Produksi &amp; Proyek</div>
+      <div class="login-sub">Project App — Produksi &amp; Proyek</div>
     </div>
     <div class="login-card">
       <div class="login-error" id="loginError">Username atau password salah.</div>
@@ -347,7 +347,7 @@
     <div class="brand">
       <div class="brand-mark">TJD</div>
       <div>
-        <div class="brand-name">Lapangan</div>
+        <div class="brand-name">Project App</div>
         <div class="brand-sub">Talenta Java Design</div>
       </div>
     </div>
@@ -758,9 +758,7 @@
     })));
     return list;
   }
-  function jobsNeedingQc(){
-    return Object.entries(jobs).filter(([k,j])=> j.stages[3].s!=='wait' && !j.qc);
-  }
+  function jobsNeedingQc(){ return allPendingQc(); }
   function projectStats(pid){
     const areas=PROJECTS[pid].areas;
     const pct=areas.length?Math.round(areas.reduce((s,a)=>s+calcAreaPct(a),0)/areas.length):0;
@@ -806,7 +804,7 @@
     const alerts=[
       ...selisih.length?[alertHtml('issue','Selisih kiriman belum diselesaikan',`${selisih.length} item di ${[...new Set(selisih.map(s=>s.proj))].join(', ')} belum diselesaikan.`)]:[],
       ...lowStock.map(x=>alertHtml('warn',`Stok ${x.nama} menipis`,`${WH_LABEL[x.wh]}: ${x.qty} ${x.unit} tersisa, di bawah minimum.`)),
-      ...qcPending.length?[alertHtml('warn','QC Finishing belum dicatat',`${qcPending.length} SPK sudah masuk tahap Finishing tanpa catatan QC.`)]:[]
+      ...qcPending.length?[alertHtml('warn','QC belum dicatat',`${qcPending.length} tahap produksi sudah berjalan/selesai tapi belum ada catatan QC.`)]:[]
     ];
     return `
       <div class="stat-row">
@@ -868,8 +866,8 @@
         <div class="stat"><div class="n">${avgPct}%</div><div class="l">Rata-rata progres</div></div>
       </div>
       <div class="sect-label">Perlu perhatian</div>
-      ${qcPending.length?qcPending.map(([k,j])=>alertHtml('warn',`QC belum dicatat — ${j.code}`,`${j.name} sudah di tahap Finishing.`)).join('')
-        :emptyState('QC sudah lengkap','Semua SPK di tahap Finishing sudah punya catatan QC.')}
+      ${qcPending.length?qcPending.map(p=>alertHtml('warn',`QC belum dicatat — ${p.j.code}`,`Tahap "${p.s.n}" pada ${p.j.name} sudah berjalan/selesai, belum ada catatan QC.`)).join('')
+        :emptyState('QC sudah lengkap','Semua tahap produksi yang berjalan sudah punya catatan QC.')}
       <div class="sect-label">Semua SPK berjalan</div>
       ${Object.keys(jobs).map(jobCardHtml).join('')}`;
   }
@@ -965,7 +963,7 @@
         ${j.stages.map((s,idx)=>`<div class="pstep ${s.s}"><div class="rail"></div>
           <div class="pdot ${s.s}">${s.s==='done'?'✓':(s.s==='run'?'●':'')}</div>
           <div class="pbody"><div class="pname">${s.n}</div><div class="pmeta">${stageMeta(s)}</div>
-            ${idx===3?`<div class="stage-actions">${qcButtonHtml(k)}</div>`:''}
+            ${stageNeedsQc(s)?`<div class="stage-actions">${qcButtonHtml(k,idx)}</div>`:''}
           </div></div>`).join('')}
         <div class="pstep ${recv.cls}"><div class="rail"></div>
           <div class="pdot ${recv.cls}">${recv.cls==='done'?'✓':(recv.cls==='issue'?'!':'')}</div>
@@ -983,19 +981,29 @@
     show('job-detail');
   }
 
-  const QC_JENIS=['Gores permukaan','Warna tidak rata','Sambungan kayu longgar','Cacat jahitan upholstery'];
-  function qcButtonHtml(k){
-    const qc=jobs[k].qc;
+  // QC melekat di tiap tahap (bukan hanya Finishing) — berlaku untuk tahap yang sudah berjalan/selesai
+  // dan memang relevan untuk produk ini (tahap "Tidak berlaku" dilewati).
+  const QC_JENIS=['Gores permukaan','Warna tidak rata','Sambungan kayu longgar','Cacat jahitan upholstery','Ukuran tidak presisi','Sambungan tidak rapat'];
+  function stageNeedsQc(s){ return s.s!=='wait' && !!s.oleh; }
+  function allPendingQc(){
+    const list=[];
+    Object.entries(jobs).forEach(([k,j])=>{
+      j.stages.forEach((s,idx)=>{ if(stageNeedsQc(s) && !s.qc) list.push({k,idx,j,s}); });
+    });
+    return list;
+  }
+  function qcButtonHtml(k,idx){
+    const qc=jobs[k].stages[idx].qc;
     if(qc){
       if(qc.jenisCacat) return `<span class="qc-badge">${qc.jenisCacat} · ${qc.qtyReject} reject${qc.foto?' · foto ✓':''}</span>`;
       return `<span class="qc-badge ok">✓ QC lolos, tanpa cacat</span>`;
     }
-    return `<button class="btn-mini" onclick="openQcModal('${k}')">+ Catat QC</button>`;
+    return `<button class="btn-mini" onclick="openQcModal('${k}',${idx})">+ Catat QC</button>`;
   }
-  function openQcModal(k){
-    const j=jobs[k];
+  function openQcModal(k,idx){
+    const j=jobs[k], s=j.stages[idx];
     openModal(`
-      <div class="modal-title">Catat QC Finishing — ${j.code}</div>
+      <div class="modal-title">Catat QC — ${s.n} (${j.code})</div>
       <div class="field"><label>Jenis cacat</label>
         <select id="qcJenis"><option value="">Tidak ada (lolos semua)</option>
           ${QC_JENIS.map(x=>`<option>${x}</option>`).join('')}
@@ -1005,14 +1013,14 @@
         <div class="fake-upload" id="qcUpload" onclick="toggleFakeUpload(this)">Tekan untuk ambil foto</div></div>
       <div class="modal-actions">
         <button class="btn-sec" onclick="closeModal()">Batal</button>
-        <button class="btn btn-in" onclick="submitQc('${k}')">Simpan QC</button>
+        <button class="btn btn-in" onclick="submitQc('${k}',${idx})">Simpan QC</button>
       </div>`);
   }
-  function submitQc(k){
+  function submitQc(k,idx){
     const jenis=document.getElementById('qcJenis').value;
     const qty=Number(document.getElementById('qcQty').value||0);
     const foto=document.getElementById('qcUpload').classList.contains('has');
-    jobs[k].qc={jenisCacat: jenis||null, qtyReject: jenis? qty:0, foto};
+    jobs[k].stages[idx].qc={jenisCacat: jenis||null, qtyReject: jenis? qty:0, foto};
     closeModal();
     openJob(k);
     renderBeranda();
