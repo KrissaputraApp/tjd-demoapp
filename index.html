@@ -1593,9 +1593,9 @@
 
     .proj-mini.done,
     .proj-card.done {
-      background-color: #dfdfdf;
-      opacity: 0.8;
-      filter: none;
+      background-color: #c9c7c1;
+      opacity: 0.65;
+      filter: grayscale(100%);
     }
 
     .card.job {
@@ -1716,8 +1716,7 @@
           <button class="netpill" id="netPill" onclick="toggleNet()">
             <span class="dot"></span><span id="netTxt">Online</span>
           </button>
-          <button class="netpill" id="langPill" onclick="toggleLang()"
-            title="Ganti bahasa / Change language">ID</button>
+          
         </div>
       </div>
 
@@ -1751,7 +1750,13 @@
         <!-- ============ PRODUKSI (list) ============ -->
         <section class="screen" data-screen="produksi">
           <div class="scr-head">
-            <div class="scr-title" data-i18n="produksi_title">Produksi</div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div class="scr-title" data-i18n="produksi_title">Produksi</div>
+              <button class="btn-mini" onclick="downloadProduksiCsv()" style="display:flex; align-items:center; gap:5px;" title="Download CSV">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                CSV
+              </button>
+            </div>
             <div class="scr-sub" data-i18n="produksi_sub">Lacak tiap SPK melewati 6 tahap: pembahanan → assembling →
               upholstery → finishing → packing → kirim.</div>
           </div>
@@ -1764,7 +1769,7 @@
               oninput="renderJobs()">
           </div>
           <div id="jobList"></div>
-          <button class="btn-sec" onclick="downloadProduksiCsv()">Unduh Laporan Produksi (CSV)</button>
+          
         </section>
 
         <!-- ============ PRODUKSI (detail) ============ -->
@@ -1828,7 +1833,7 @@
             <button onclick="setWh(this,'wh_dprri')">DPR RI</button>
           </div>
           <div class="card" id="stockCard"></div>
-          <button class="btn-sec" onclick="downloadStokCsv()">Unduh Laporan Stok (CSV)</button>
+          
           <div class="note">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round">
@@ -1928,7 +1933,7 @@
             </svg>
           </div>
           <div class="card pad" id="profileHistory" style="cursor:pointer;" onclick="openAttendanceHistory()"></div>
-          <button class="btn-sec" onclick="downloadAbsenCsv()">Unduh Riwayat Absen (CSV)</button>
+          
 
           <button class="btn-sec" onclick="logout()" style="margin-top:16px" data-i18n="btn_logout">Keluar</button>
         </section>
@@ -2671,7 +2676,6 @@
         const key = el.dataset.i18n;
         if (dict[key]) el.textContent = dict[key];
       });
-      document.getElementById('langPill').textContent = currentLang.toUpperCase();
     }
     function toggleLang() {
       currentLang = currentLang === 'id' ? 'en' : 'id';
