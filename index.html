@@ -1665,6 +1665,107 @@
       margin-left: auto;
       margin-right: auto
     }
+    /* ---------- Back-Office (Desktop) ---------- */
+    body.desktop-active { display: block; padding: 0; background: #1c1a17; }
+    body.desktop-active .phone { display: none; }
+    #desktopShell { display: none; min-height: 100vh; background: #eceae5; flex-direction: column; }
+    body.desktop-active #desktopShell { display: flex; }
+
+    /* Strip judul jendela ala aplikasi desktop asli (traffic-light dots) — supaya beda dari web biasa */
+    .db-titlebar {
+      background: #14120f; color: #a39d90; height: 34px; flex-shrink: 0;
+      display: flex; align-items: center; padding: 0 14px; font-size: 11.5px; font-weight: 600;
+      letter-spacing: .3px; -webkit-user-select: none; user-select: none;
+    }
+    .db-traffic { display: flex; gap: 7px; margin-right: 14px }
+    .db-traffic span { width: 11px; height: 11px; border-radius: 50%; display: inline-block }
+    .db-traffic span:nth-child(1) { background: #ec6a5e }
+    .db-traffic span:nth-child(2) { background: #f4bf4f }
+    .db-traffic span:nth-child(3) { background: #61c454 }
+    .db-titlebar-label { flex: 1; text-align: center; margin-right: 60px }
+
+    .db-body { display: flex; flex: 1; min-height: 0 }
+
+    /* Sidebar gelap dengan rail aktif — pola aplikasi desktop (mis. VSCode/Slack), bukan navbar situs web */
+    .db-sidebar {
+      width: 216px; flex-shrink: 0; background: #21201d; color: #d8d3c8;
+      display: flex; flex-direction: column; padding: 18px 0 0;
+    }
+    .db-sidebar-logo { padding: 0 20px 20px; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 10px }
+    .db-sidebar-logo .mark { color: var(--honey); font-family: 'Space Grotesk'; font-weight: 700; font-size: 20px }
+    .db-sidebar-logo .sub { font-size: 10.5px; color: #8f897c; margin-top: 2px; letter-spacing: .4px; text-transform: uppercase }
+    .db-nav { display: flex; flex-direction: column; gap: 2px; padding: 0 10px; flex: 1 }
+    .db-nav button {
+      text-align: left; border: none; background: none; padding: 10px 12px; border-radius: 9px;
+      font-size: 13px; font-weight: 600; color: #a9a396; cursor: pointer; font-family: 'Inter';
+      display: flex; align-items: center; gap: 11px; position: relative; transition: background .15s, color .15s;
+    }
+    .db-nav button svg { width: 17px; height: 17px; flex-shrink: 0; opacity: .8 }
+    .db-nav button:hover { background: rgba(255,255,255,.05); color: #efece3 }
+    .db-nav button.on { background: rgba(200,133,15,.14); color: #fff }
+    .db-nav button.on svg { opacity: 1; color: var(--honey) }
+    .db-nav button.on::before { content: ''; position: absolute; left: -10px; top: 8px; bottom: 8px; width: 3px; border-radius: 3px; background: var(--honey) }
+    .db-sidebar-user {
+      display: flex; align-items: center; gap: 10px; padding: 14px 16px;
+      border-top: 1px solid rgba(255,255,255,.08); margin-top: 8px;
+    }
+    .db-avatar {
+      width: 34px; height: 34px; border-radius: 10px; background: var(--honey); color: #2a1d05;
+      display: grid; place-items: center; font-family: 'Space Grotesk'; font-weight: 700; font-size: 14px; flex-shrink: 0;
+    }
+    .db-user-meta { flex: 1; min-width: 0 }
+    .db-user-meta .nm { font-size: 12.5px; font-weight: 700; color: #f3efe6; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+    .db-user-meta .rl { font-size: 10.5px; color: #928c7e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+    .db-logout-btn {
+      background: none; border: none; color: #928c7e; cursor: pointer; padding: 6px; border-radius: 7px; flex-shrink: 0;
+      display: grid; place-items: center;
+    }
+    .db-logout-btn:hover { background: rgba(255,255,255,.08); color: #fff }
+
+    /* Konten */
+    .db-content { flex: 1; display: flex; flex-direction: column; min-width: 0 }
+    .db-topbar-inner {
+      background: #fff; border-bottom: 1px solid var(--line); padding: 12px 28px; display: flex;
+      align-items: center; justify-content: space-between; gap: 16px; flex-shrink: 0;
+    }
+    .db-breadcrumb { font-size: 12.5px; color: var(--muted); font-weight: 600 }
+    .db-breadcrumb b { color: var(--ink) }
+    .db-quick-search {
+      padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); font-family: 'Inter';
+      font-size: 12.5px; width: 220px; background: var(--line-soft); color: var(--ink)
+    }
+    .db-main { flex: 1; padding: 26px 32px; overflow-y: auto }
+    .db-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; gap: 12px; flex-wrap: wrap }
+    .db-head h1 { font-family: 'Space Grotesk'; font-size: 22px; font-weight: 700; letter-spacing: -.3px }
+    .db-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 24px }
+    .db-kpi {
+      background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px;
+      display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 2px rgba(26,25,23,.04);
+    }
+    .db-kpi .ic { width: 42px; height: 42px; border-radius: 11px; flex-shrink: 0; display: grid; place-items: center }
+    .db-kpi .n { font-family: 'Space Grotesk'; font-weight: 700; font-size: 25px; line-height: 1 }
+    .db-kpi .l { font-size: 11.5px; color: var(--muted); margin-top: 5px; font-weight: 500 }
+    .db-table-wrap { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(26,25,23,.04) }
+    .db-table { width: 100%; border-collapse: collapse; font-size: 13px }
+    .db-table th {
+      text-align: left; padding: 11px 16px; background: #f7f6f3; color: var(--muted); font-weight: 700;
+      font-size: 10.5px; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid var(--line);
+      position: sticky; top: 0;
+    }
+    .db-table td { padding: 12px 16px; border-top: 1px solid var(--line-soft); vertical-align: middle }
+    .db-table tbody tr:nth-child(even) td { background: #fbfaf8 }
+    .db-table tbody tr:hover td { background: #f2ecdf }
+    .db-toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap }
+    .db-toolbar input, .db-toolbar select {
+      padding: 9px 12px; border-radius: 9px; border: 1px solid var(--line); font-family: 'Inter';
+      font-size: 13px; background: #fff; color: var(--ink)
+    }
+    .db-btn {
+      background: var(--ink); color: #fff; border: none; padding: 10px 18px; border-radius: 9px;
+      font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Space Grotesk'; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .db-btn:hover { background: #000 }
   </style>
 </head>
 
@@ -1679,6 +1780,10 @@
         <div class="login-mark">TJD</div>
         <div class="login-title">Talenta Java Design</div>
         <div class="login-sub" data-i18n="login_tagline">Project App — Produksi &amp; Proyek</div>
+      </div>
+      <div class="seg" id="modeSeg" style="margin-bottom:14px">
+        <button class="on" onclick="setLoginMode(this,false)">📱 Aplikasi Lapangan</button>
+        <button onclick="setLoginMode(this,true)">🖥️ Back-Office (Desktop)</button>
       </div>
       <div class="login-card">
         <div class="login-error" id="loginError" data-i18n="login_error">Username atau password salah.</div>
@@ -1739,7 +1844,7 @@
               <div class="avatar" id="avatarInit">V</div>
               <div>
                 <div class="scr-title" id="greetName">Halo, Antonius</div>
-                <div class="scr-sub" id="roleSub">Direksi · Senin, 6 Juli 2026</div>
+                <div class="scr-sub" id="roleSub">Direksi</div>
               </div>
             </div>
             <button class="link-btn" onclick="openSwitchViewModal()">Lihat sebagai peran lain</button>
@@ -1983,6 +2088,66 @@
           <span class="lbl" data-i18n="nav_profil">Profil</span>
         </button>
       </nav>
+    </div>
+  </div>
+
+  <!-- ============ BACK-OFFICE (DESKTOP) ============ -->
+  <div id="desktopShell">
+    <div class="db-titlebar">
+      <div class="db-traffic"><span></span><span></span><span></span></div>
+      <div class="db-titlebar-label">TJD Back-Office — Talenta Java Design</div>
+    </div>
+    <div class="db-body">
+      <nav class="db-sidebar">
+        <div class="db-sidebar-logo"><div class="mark">TJD</div><div class="sub">Back-Office</div></div>
+        <div class="db-nav" id="dbSidebar">
+          <button class="on" onclick="renderDesktop('dashboard',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+            Dashboard
+          </button>
+          <button onclick="renderDesktop('produksi',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 4 5 5-3 3-5-5 3-3Z"/><path d="m11 8-8 8v5h5l8-8"/></svg>
+            Produksi
+          </button>
+          <button onclick="renderDesktop('proyek',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/><path d="M16 8h2a2 2 0 0 1 2 2v11M8 7h.01M12 7h.01M8 11h.01M12 11h.01M8 15h.01M12 15h.01"/></svg>
+            Proyek
+          </button>
+          <button onclick="renderDesktop('gudang',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v11h18V8Z"/><path d="M3 8h18M9 21v-7h6v7"/></svg>
+            Gudang
+          </button>
+          <button onclick="renderDesktop('kehadiran',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+            Kehadiran
+          </button>
+          <button onclick="renderDesktop('pengguna',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M3 21a6 6 0 0 1 12 0"/><circle cx="18" cy="7" r="2.6"/><path d="M15.5 21c.3-2.7 2-4.5 4.5-4.9"/></svg>
+            Pengguna
+          </button>
+          <button onclick="renderDesktop('laporan',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>
+            Laporan
+          </button>
+        </div>
+        <div class="db-sidebar-user">
+          <div class="db-avatar" id="dbAvatar">A</div>
+          <div class="db-user-meta">
+            <div class="nm" id="dbUserNama">—</div>
+            <div class="rl" id="dbUserJabatan">—</div>
+          </div>
+          <button class="db-logout-btn" onclick="logout()" title="Keluar">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+          </button>
+        </div>
+      </nav>
+      <div class="db-content">
+        <div class="db-topbar-inner">
+          <div class="db-breadcrumb">Back-Office / <b id="dbBreadcrumb">Dashboard</b></div>
+          <input class="db-quick-search" placeholder="Cari cepat di halaman ini..." oninput="dbQuickSearch(this)">
+        </div>
+        <main class="db-main" id="dbMain"></main>
+      </div>
     </div>
   </div>
 
@@ -2458,7 +2623,7 @@
     // supaya kelihatan jelas ini demo akses granular per orang, bukan cuma duplikat.
     const USERS = [
       // — Jajaran Direksi —
-      { username: 'antonius', password: 'valent123', nama: 'Antonius', role: 'Direksi', jabatan: 'Direksi' },
+      { username: 'admin', password: 'admin', nama: 'Antonius', role: 'Direksi', jabatan: 'Direksi' },
       // — Manager (lihat semua) —
       { username: 'budi', password: 'budi123', nama: 'Budi', role: 'Koordinator Lapangan', jabatan: 'Manager Lapangan' },
       { username: 'andi', password: 'andi123', nama: 'Andi', role: 'Operator Produksi', jabatan: 'Manager Produksi' },
@@ -2471,10 +2636,17 @@
     ];
     let currentUser = null, currentRole = null;
 
+    // "allowedProjects" dan "allowedWhs" saling menurunkan satu sama lain — supervisor gudang
+    // yang dibatasi ke gudang tertentu (mis. wh_meru) otomatis juga dibatasi ke proyek yang sama
+    // (meru) saat buka tab Proyek, dan sebaliknya. Sebelumnya keduanya dicek terpisah, jadi
+    // supervisor gudang tetap lihat SEMUA proyek — itu bug yang dilaporkan.
     function getAllowedProjects() {
       let keys = Object.keys(PROJECTS);
       if (currentUser && currentUser.allowedProjects) {
         keys = keys.filter(k => currentUser.allowedProjects.includes(k));
+      } else if (currentUser && currentUser.allowedWhs) {
+        const fromWh = currentUser.allowedWhs.map(w => w.replace(/^wh_/, ''));
+        keys = keys.filter(k => fromWh.includes(k));
       }
       return keys;
     }
@@ -2489,6 +2661,9 @@
       let keys = Object.keys(WH_LABEL);
       if (currentUser && currentUser.allowedWhs) {
         keys = keys.filter(k => currentUser.allowedWhs.includes(k));
+      } else if (currentUser && currentUser.allowedProjects) {
+        const whKeys = currentUser.allowedProjects.map(p => 'wh_' + p);
+        keys = keys.filter(k => whKeys.includes(k));
       }
       return keys;
     }
@@ -2498,6 +2673,14 @@
     function getProjectWhs() { return getAllowedWhs().filter(k => k !== 'pabrik_project' && k !== 'export'); }
 
 
+    // Toggle di layar login: pilih masuk sebagai App Lapangan (HP) atau Back-Office (Desktop).
+    // Keduanya pakai data & akun yang sama — cuma tampilan/shell yang beda.
+    let desktopMode = false;
+    function setLoginMode(btn, isDesktop) {
+      desktopMode = isDesktop;
+      document.querySelectorAll('#modeSeg button').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+    }
     function login() {
       const u = document.getElementById('loginUser').value.trim().toLowerCase();
       const p = document.getElementById('loginPass').value;
@@ -2515,14 +2698,25 @@
       currentUser = user; currentRole = user.role;
       const loginScreen = document.getElementById('loginScreen');
       if (loginScreen) loginScreen.classList.add('hide');
-      const appShell = document.getElementById('appShell');
-      if (appShell) appShell.style.display = 'flex';
       const loginUser = document.getElementById('loginUser');
       if (loginUser) loginUser.value = '';
       const loginPass = document.getElementById('loginPass');
       if (loginPass) loginPass.value = '';
       const loginError = document.getElementById('loginError');
       if (loginError) loginError.classList.remove('show');
+
+      if (desktopMode) {
+        document.body.classList.add('desktop-active');
+        document.getElementById('appShell').style.display = 'none';
+        document.getElementById('dbAvatar').textContent = user.nama.charAt(0).toUpperCase();
+        document.getElementById('dbUserNama').textContent = user.nama;
+        document.getElementById('dbUserJabatan').textContent = user.jabatan;
+        renderDesktop('dashboard', document.querySelector('#dbSidebar button'));
+        return;
+      }
+      document.body.classList.remove('desktop-active');
+      const appShell = document.getElementById('appShell');
+      if (appShell) appShell.style.display = 'flex';
 
       // update profile badge
       const pName = document.getElementById('profile-name');
@@ -2584,6 +2778,7 @@
     function logout() {
       currentUser = null; currentRole = null;
       closeModal();
+      document.body.classList.remove('desktop-active');
       document.getElementById('appShell').style.display = 'none';
       document.getElementById('loginScreen').classList.remove('hide');
     }
@@ -2616,7 +2811,7 @@
       if (!currentUser) return;
       document.getElementById('greetName').textContent = 'Halo, ' + currentUser.nama;
       document.getElementById('avatarInit').textContent = currentUser.nama.charAt(0).toUpperCase();
-      document.getElementById('roleSub').textContent = currentUser.jabatan + ' · Senin, 6 Juli 2026';
+      document.getElementById('roleSub').textContent = currentUser.jabatan + ' · ' + todayLabel();
       document.getElementById('profileAvatar').textContent = currentUser.nama.charAt(0).toUpperCase();
       document.getElementById('profileName').textContent = currentUser.nama;
       document.getElementById('profileRole').textContent = currentUser.jabatan;
@@ -2872,8 +3067,8 @@
       const pLen = getAllowedProjects().length; const avgPct = pLen ? Math.round(getAllowedProjects().reduce((s, pid) => s + projectStats(pid).pct, 0) / pLen) : 0;
       return `
       <div class="stat-row">
-        <div class="stat" onclick="show('produksi')"><div class="n grn">${avgPct}%</div><div class="l">Rata-rata instalasi</div></div>
-        <div class="stat" onclick="show('produksi')"><div class="n hon">${sedang}</div><div class="l">Item sedang dipasang</div></div>
+        <div class="stat" onclick="show('proyek')"><div class="n grn">${avgPct}%</div><div class="l">Rata-rata instalasi</div></div>
+        <div class="stat" onclick="show('proyek')"><div class="n hon">${sedang}</div><div class="l">Item sedang dipasang</div></div>
         <div class="stat" onclick="openNotifications('kendala')"><div class="n ${kendala.length ? '' : 'grn'}">${kendala.length}</div><div class="l">Kendala Lapangan</div></div>
       </div>
       <div class="sect-label" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="show('proyek')">
@@ -2940,7 +3135,7 @@
       const absenIdx = new Set();
       while (absenIdx.size < numAbsen) absenIdx.add(1 + Math.floor(rand() * 58));
       return Array.from({ length: 60 }, (_, i) => {
-        const d = new Date(2026, 6, 4);
+        const d = new Date();
         d.setDate(d.getDate() - i);
         const day = d.getDay();
         const tgl = `${days[day]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
@@ -2950,8 +3145,8 @@
         return { tgl, status: 'hadir', masuk: `${jam}:${String(Math.floor(rand() * 45)).padStart(2, '0')}`, keluar: `16:${String(30 + Math.floor(rand() * 29)).padStart(2, '0')}` };
       });
     }
-    function getAttendance() {
-      const uname = currentUser ? currentUser.username : 'guest';
+    function getAttendance(username) {
+      const uname = username || (currentUser ? currentUser.username : 'guest');
       if (!ATTENDANCE_BY_USER[uname]) ATTENDANCE_BY_USER[uname] = generateAttendance(uname);
       return ATTENDANCE_BY_USER[uname];
     }
@@ -2966,10 +3161,10 @@
     window.showCalDetail = function (t, d) {
       document.getElementById('calDetail').innerHTML = `<b>${t}</b><br><span style="color:var(--muted)">${d}</span>`;
     }
-    function renderCalendarHtml() {
+    function renderCalendarHtml(username) {
       let html = '';
       const attMap = {};
-      getAttendance().forEach(h => { attMap[h.tgl] = h; });
+      getAttendance(username).forEach(h => { attMap[h.tgl] = h; });
 
       const renderMonth = (year, monthIndex) => {
         const d = new Date(year, monthIndex, 1);
@@ -3008,8 +3203,10 @@
         mHtml += `</div>`;
         return mHtml;
       };
-      html += renderMonth(2026, 5); // June
-      html += renderMonth(2026, 6); // July
+      const now = new Date();
+      const prevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      html += renderMonth(prevMonth.getFullYear(), prevMonth.getMonth());
+      html += renderMonth(now.getFullYear(), now.getMonth());
       return html;
     }
     function openAttendanceHistory() {
@@ -3240,6 +3437,14 @@
       const bln = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
       const d = new Date();
       return `${hari[d.getDay()]}, ${d.getDate()} ${bln[d.getMonth()]} ${d.getFullYear()} · ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    }
+    // Tanggal hari ini yang sungguhan (bukan teks statis "6 Juli 2026") — dipakai di header
+    // Beranda/Profil supaya selalu sinkron dengan tanggal asli perangkat.
+    function todayLabel() {
+      const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const blnPanjang = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      const d = new Date();
+      return `${hari[d.getDay()]}, ${d.getDate()} ${blnPanjang[d.getMonth()]} ${d.getFullYear()}`;
     }
 
     // ---------- Export laporan (CSV) — bisa dibuka langsung di Excel/Sheets ----------
@@ -3709,6 +3914,303 @@
       document.getElementById('shootBtn').textContent = 'Ambil foto & check-in';
       camOk = false; locOk = false;
       setStatus('Pastikan wajah terlihat jelas dan pencahayaan cukup.');
+    }
+
+    // ================= BACK-OFFICE (DESKTOP) =================
+    // Bukan sekadar tampilan lain dari data yang sama — di sini ada alur BUAT data baru
+    // (SPK, proyek, barang gudang, pengguna), bukan cuma memonitor data yang sudah diisi lebih dulu.
+    const DB_LABELS = { dashboard: 'Dashboard', produksi: 'Produksi', proyek: 'Proyek', gudang: 'Gudang', kehadiran: 'Kehadiran', pengguna: 'Pengguna', laporan: 'Laporan' };
+    function dbQuickSearch(el) {
+      const q = el.value.toLowerCase();
+      document.querySelectorAll('#dbMain .db-table tr').forEach(tr => {
+        if (tr.querySelector('th')) return;
+        tr.style.display = (!q || tr.textContent.toLowerCase().includes(q)) ? '' : 'none';
+      });
+    }
+    function renderDesktop(section, btn) {
+      document.querySelectorAll('#dbSidebar button').forEach(b => b.classList.remove('on'));
+      if (btn) btn.classList.add('on');
+      document.querySelector('.db-quick-search').value = '';
+      document.getElementById('dbBreadcrumb').textContent = DB_LABELS[section] || 'Dashboard';
+      const builders = { dashboard: dbDashboard, produksi: dbProduksi, proyek: dbProyek, gudang: dbGudang, kehadiran: dbKehadiran, pengguna: dbPengguna, laporan: dbLaporan };
+      document.getElementById('dbMain').innerHTML = (builders[section] || dbDashboard)();
+      const postRender = { produksi: dbRenderJobTable, proyek: dbRenderProjTable, gudang: dbRenderStockTable, kehadiran: dbRenderAttendanceTable, pengguna: dbRenderUserTable };
+      if (postRender[section]) postRender[section]();
+    }
+
+    function dbKpi(icon, bg, color, n, label) {
+      return `<div class="db-kpi"><div class="ic" style="background:${bg};color:${color}">${icon}</div><div><div class="n">${n}</div><div class="l">${label}</div></div></div>`;
+    }
+    const DB_ICONS = {
+      spk: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 4 5 5-3 3-5-5 3-3Z"/><path d="m11 8-8 8v5h5l8-8"/></svg>',
+      proyek: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/><path d="M16 8h2a2 2 0 0 1 2 2v11"/></svg>',
+      gudang: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v11h18V8Z"/><path d="M3 8h18M9 21v-7h6v7"/></svg>',
+      user: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M3 21a6 6 0 0 1 12 0"/></svg>'
+    };
+    function dbDashboard() {
+      const jobsN = getAllowedJobs().length;
+      const projOngoing = getAllowedProjects().filter(pid => projectStats(pid).pct < 100).length;
+      const low = lowStockList();
+      const kendala = openKendalaList();
+      return `
+        <div class="db-head"><h1>Dashboard</h1></div>
+        <div class="db-kpis">
+          ${dbKpi(DB_ICONS.spk, '#f8ecd4', '#8a5f14', jobsN, 'SPK Aktif')}
+          ${dbKpi(DB_ICONS.proyek, '#e2f1e8', '#1f6641', projOngoing, 'Proyek Berjalan')}
+          ${dbKpi(DB_ICONS.gudang, '#fbe6e4', '#a5382f', low.length, 'SKU Menipis')}
+          ${dbKpi(DB_ICONS.user, '#eee9fb', '#4c3ba0', USERS.length, 'Total Pengguna')}
+        </div>
+        <div class="db-head"><h1 style="font-size:15px">Kendala Lapangan Terbuka</h1></div>
+        <div class="db-table-wrap"><table class="db-table">
+          <tr><th>Proyek</th><th>Area</th><th>Barang</th><th>SPK</th><th>Kendala</th></tr>
+          ${kendala.length ? kendala.map(k => `<tr><td>${k.proj}</td><td>${k.area}</td><td>${k.nama}</td><td>${k.spk}</td><td>${kendalaLabel(k.kendalaStatus)}</td></tr>`).join('')
+          : '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Tidak ada kendala terbuka</td></tr>'}
+        </table></div>`;
+    }
+
+    function dbViewJob(k) {
+      const j = jobs[k], recv = receptionStage(j);
+      openModal(`
+        <div class="modal-title">${j.code} — ${j.name}</div>
+        <div class="field"><label>Proyek</label><input value="${j.proj}" disabled></div>
+        <div style="margin:6px 0 14px">
+          ${j.stages.map(s => `<div class="kv"><span class="k">${s.n}</span><span class="v" style="font-family:'Inter';font-weight:500">${stageMeta(s)}</span></div>`).join('')}
+          <div class="kv"><span class="k">Diterima di proyek</span><span class="v" style="font-family:'Inter';font-weight:500">${recv.text}</span></div>
+        </div>
+        <div class="modal-actions"><button class="btn-sec" onclick="closeModal()">Tutup</button></div>`);
+    }
+
+    function dbProduksi() {
+      return `
+        <div class="db-head"><h1>Produksi</h1><button class="db-btn" onclick="openNewSpkModal()">+ Buat SPK Baru</button></div>
+        <div class="db-toolbar">
+          <input type="text" id="dbJobSearch" placeholder="Cari kode/nama/proyek..." oninput="dbRenderJobTable()" style="flex:1;min-width:200px">
+          <button class="btn-sec" style="width:auto;margin:0" onclick="downloadProduksiCsv()">Unduh CSV</button>
+        </div>
+        <div class="db-table-wrap"><table class="db-table" id="dbJobTable"></table></div>`;
+    }
+    function dbRenderJobTable() {
+      const q = (document.getElementById('dbJobSearch')?.value || '').toLowerCase();
+      const rows = getAllowedJobs().filter(k => { const j = jobs[k]; return !q || j.code.toLowerCase().includes(q) || j.name.toLowerCase().includes(q) || j.proj.toLowerCase().includes(q); })
+        .sort((a, b) => jobs[a].pct - jobs[b].pct);
+      document.getElementById('dbJobTable').innerHTML = `
+        <tr><th>Kode SPK</th><th>Nama Produk</th><th>Proyek</th><th>Tahap</th><th>Progres</th></tr>
+        ${rows.map(k => { const j = jobs[k]; return `<tr onclick="dbViewJob('${k}')" style="cursor:pointer"><td>${j.code}</td><td>${j.name}</td><td>${j.proj}</td><td><span class="badge ${j.badge[0]}">${j.badge[1]}</span></td><td>${j.pct}%</td></tr>`; }).join('')
+          || '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Tidak ada data</td></tr>'}`;
+    }
+    function openNewSpkModal() {
+      const projOpts = Object.entries(PROJECTS).map(([pid, p]) => `<option value="${pid}">${p.nama}</option>`).join('');
+      openModal(`
+        <div class="modal-title">Buat SPK Baru</div>
+        <div class="field"><label>Nama Produk</label><input id="newSpkName" placeholder="mis. Nakas Veneer"></div>
+        <div class="field"><label>Proyek</label><select id="newSpkProj">${projOpts}</select></div>
+        <div class="modal-actions">
+          <button class="btn-sec" onclick="closeModal()">Batal</button>
+          <button class="db-btn" onclick="dbCreateSpk()">Simpan</button>
+        </div>`);
+    }
+    function dbCreateSpk() {
+      const name = document.getElementById('newSpkName').value.trim();
+      const pid = document.getElementById('newSpkProj').value;
+      if (!name) { alert('Nama produk wajib diisi.'); return; }
+      const id = 'j' + (Date.now().toString().slice(-6));
+      const code = 'SPK-2026-' + (200 + Object.keys(jobs).length);
+      jobs[id] = {
+        code, name, proj: PROJECTS[pid].nama, badge: ['wait', 'Pembahanan'], pct: 0,
+        stages: [{ n: 'Pembahanan', s: 'wait' }, { n: 'Assembling', s: 'wait' }, { n: 'Upholstery', s: 'wait' }, { n: 'Finishing', s: 'wait' }, { n: 'Packing', s: 'wait' }, { n: 'Kirim ke proyek', s: 'wait' }],
+        bom: []
+      };
+      closeModal(); dbRenderJobTable(); renderJobs();
+      showToast(`✓ SPK ${code} dibuat`);
+    }
+
+    function dbProyek() {
+      return `
+        <div class="db-head"><h1>Proyek</h1><button class="db-btn" onclick="openNewProjModal()">+ Tambah Proyek</button></div>
+        <div class="db-toolbar"><input type="text" id="dbProjSearch" placeholder="Cari nama/lokasi..." oninput="dbRenderProjTable()" style="flex:1;min-width:200px"></div>
+        <div class="db-table-wrap"><table class="db-table" id="dbProjTable"></table></div>`;
+    }
+    function dbRenderProjTable() {
+      const q = (document.getElementById('dbProjSearch')?.value || '').toLowerCase();
+      const rows = getAllowedProjects().filter(pid => { const p = PROJECTS[pid]; return !q || p.nama.toLowerCase().includes(q) || p.lokasi.toLowerCase().includes(q); });
+      document.getElementById('dbProjTable').innerHTML = `
+        <tr><th>Nama Proyek</th><th>Lokasi</th><th>Area</th><th>Instalasi</th><th>Kendala</th></tr>
+        ${rows.map(pid => { const p = PROJECTS[pid], s = projectStats(pid); return `<tr><td>${p.nama}</td><td>${p.lokasi}</td><td>${s.total}</td><td>${s.pct}%</td><td>${s.selisih}</td></tr>`; }).join('')
+          || '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Tidak ada data</td></tr>'}`;
+    }
+    function openNewProjModal() {
+      openModal(`
+        <div class="modal-title">Tambah Proyek Baru</div>
+        <div class="field"><label>Nama Proyek</label><input id="newProjName" placeholder="mis. Hotel ABC"></div>
+        <div class="field"><label>Lokasi</label><input id="newProjLoc" placeholder="mis. Bandung, Indonesia"></div>
+        <div class="modal-actions">
+          <button class="btn-sec" onclick="closeModal()">Batal</button>
+          <button class="db-btn" onclick="dbCreateProj()">Simpan</button>
+        </div>`);
+    }
+    function dbCreateProj() {
+      const nama = document.getElementById('newProjName').value.trim();
+      const lokasi = document.getElementById('newProjLoc').value.trim();
+      if (!nama) { alert('Nama proyek wajib diisi.'); return; }
+      const pid = 'proj_' + Date.now().toString().slice(-6);
+      PROJECTS[pid] = { nama, lokasi: lokasi || '-', areas: [] };
+      closeModal(); dbRenderProjTable(); renderProjectCards();
+      showToast(`✓ Proyek "${nama}" dibuat`);
+    }
+
+    function dbGudang() {
+      const whOpts = getAllowedWhs().map(k => `<option value="${k}">${WH_LABEL[k]}</option>`).join('');
+      return `
+        <div class="db-head"><h1>Gudang</h1><button class="db-btn" onclick="openNewStockModal()">+ Tambah Barang</button></div>
+        <div class="db-toolbar">
+          <select id="dbWhFilter" onchange="dbRenderStockTable()"><option value="">Semua Gudang</option>${whOpts}</select>
+          <input type="text" id="dbStockSearch" placeholder="Cari kode/nama barang..." oninput="dbRenderStockTable()" style="flex:1;min-width:180px">
+          <button class="btn-sec" style="width:auto;margin:0" onclick="downloadStokCsv()">Unduh CSV</button>
+        </div>
+        <div class="db-table-wrap"><table class="db-table" id="dbStockTable"></table></div>`;
+    }
+    function dbRenderStockTable() {
+      const whFilter = document.getElementById('dbWhFilter')?.value || '';
+      const q = (document.getElementById('dbStockSearch')?.value || '').toLowerCase();
+      const whs = whFilter ? [whFilter] : getAllowedWhs();
+      const rows = [];
+      whs.forEach(wh => (stock[wh] || []).forEach(r => { if (!q || r[0].toLowerCase().includes(q) || r[1].toLowerCase().includes(q)) rows.push({ wh, r }); }));
+      document.getElementById('dbStockTable').innerHTML = `
+        <tr><th>Gudang</th><th>Kode</th><th>Nama Barang</th><th>Qty</th><th>Satuan</th><th>Status</th></tr>
+        ${rows.map(({ wh, r }) => `<tr><td>${WH_LABEL[wh]}</td><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4] ? '<span class="chip-low">MENIPIS</span>' : 'Aman'}</td></tr>`).join('')
+          || '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Tidak ada data</td></tr>'}`;
+    }
+    function openNewStockModal() {
+      const whOpts = getAllowedWhs().map(k => `<option value="${k}">${WH_LABEL[k]}</option>`).join('');
+      openModal(`
+        <div class="modal-title">Tambah Barang Masuk</div>
+        <div class="field"><label>Gudang</label><select id="newStockWh">${whOpts}</select></div>
+        <div class="field"><label>Kode Barang</label><input id="newStockCode" placeholder="mis. SKRUP-30"></div>
+        <div class="field"><label>Nama Barang</label><input id="newStockName" placeholder="mis. Sekrup 30mm"></div>
+        <div class="field"><label>Jumlah</label><input type="number" id="newStockQty" value="0"></div>
+        <div class="field"><label>Satuan</label><input id="newStockUnit" placeholder="mis. pcs"></div>
+        <div class="modal-actions">
+          <button class="btn-sec" onclick="closeModal()">Batal</button>
+          <button class="db-btn" onclick="dbCreateStock()">Simpan</button>
+        </div>`);
+    }
+    function dbCreateStock() {
+      const wh = document.getElementById('newStockWh').value;
+      const code = document.getElementById('newStockCode').value.trim();
+      const name = document.getElementById('newStockName').value.trim();
+      const qty = Number(document.getElementById('newStockQty').value || 0);
+      const unit = document.getElementById('newStockUnit').value.trim() || 'pcs';
+      if (!code || !name) { alert('Kode dan nama barang wajib diisi.'); return; }
+      if (!stock[wh]) stock[wh] = [];
+      stock[wh].push([code, name, qty, unit, qty < 10]);
+      closeModal(); dbRenderStockTable();
+      showToast(`✓ ${name} ditambahkan ke ${WH_LABEL[wh]}`);
+    }
+
+    function dbPengguna() {
+      return `
+        <div class="db-head"><h1>Pengguna</h1><button class="db-btn" onclick="openNewUserModal()">+ Tambah Pengguna</button></div>
+        <div class="db-table-wrap"><table class="db-table" id="dbUserTable"></table></div>`;
+    }
+    function dbRenderUserTable() {
+      document.getElementById('dbUserTable').innerHTML = `
+        <tr><th>Nama</th><th>Username</th><th>Role</th><th>Jabatan</th><th></th></tr>
+        ${USERS.map((u, i) => `<tr><td>${u.nama}</td><td>${u.username}</td><td>${u.role}</td><td>${u.jabatan}</td>
+          <td><button class="btn-mini" onclick="dbDeleteUser(${i})">Hapus</button></td></tr>`).join('')}`;
+    }
+    function openNewUserModal() {
+      const roleOpts = ['Direksi', 'Koordinator Lapangan', 'Operator Produksi', 'Admin Gudang', 'Pekerja'].map(r => `<option>${r}</option>`).join('');
+      openModal(`
+        <div class="modal-title">Tambah Pengguna Baru</div>
+        <div class="field"><label>Nama</label><input id="newUserNama" placeholder="mis. Dewi Anggraini"></div>
+        <div class="field"><label>Username</label><input id="newUserUsername" placeholder="mis. dewi"></div>
+        <div class="field"><label>Password</label><input id="newUserPassword" type="password" placeholder="min. 6 karakter"></div>
+        <div class="field"><label>Role</label><select id="newUserRole">${roleOpts}</select></div>
+        <div class="field"><label>Jabatan (label tampilan)</label><input id="newUserJabatan" placeholder="mis. Supervisor Lapangan"></div>
+        <div class="modal-actions">
+          <button class="btn-sec" onclick="closeModal()">Batal</button>
+          <button class="db-btn" onclick="dbCreateUser()">Simpan</button>
+        </div>`);
+    }
+    function dbCreateUser() {
+      const nama = document.getElementById('newUserNama').value.trim();
+      const username = document.getElementById('newUserUsername').value.trim().toLowerCase();
+      const password = document.getElementById('newUserPassword').value;
+      const role = document.getElementById('newUserRole').value;
+      const jabatan = document.getElementById('newUserJabatan').value.trim() || role;
+      if (!nama || !username || !password) { alert('Nama, username, dan password wajib diisi.'); return; }
+      if (USERS.some(u => u.username === username)) { alert('Username sudah dipakai.'); return; }
+      USERS.push({ username, password, nama, role, jabatan });
+      closeModal(); dbRenderUserTable();
+      document.getElementById('demoChips').innerHTML = userChipsHtml();
+      showToast(`✓ Pengguna "${nama}" ditambahkan`);
+    }
+    function dbDeleteUser(i) {
+      if (USERS[i].username === currentUser.username) { alert('Tidak bisa menghapus akun yang sedang login.'); return; }
+      const nama = USERS[i].nama;
+      USERS.splice(i, 1);
+      dbRenderUserTable();
+      document.getElementById('demoChips').innerHTML = userChipsHtml();
+      showToast(`Pengguna "${nama}" dihapus`);
+    }
+
+    // ---------- Kehadiran / Jadwal Pegawai — rekap semua pegawai dalam satu tabel, ----------
+    // bisa lihat kalender 2 bulan tiap orang. Sebelumnya kehadiran cuma bisa dilihat diri
+    // sendiri lewat app HP; di Back-Office, atasan bisa memantau semua orang sekaligus.
+    function dbKehadiran() {
+      return `
+        <div class="db-head"><h1>Kehadiran Pegawai</h1></div>
+        <div class="db-toolbar"><input type="text" id="dbAttSearch" placeholder="Cari nama pegawai..." oninput="dbRenderAttendanceTable()" style="flex:1;min-width:200px"></div>
+        <div class="db-table-wrap"><table class="db-table" id="dbAttTable"></table></div>`;
+    }
+    function dbRenderAttendanceTable() {
+      const q = (document.getElementById('dbAttSearch')?.value || '').toLowerCase();
+      const rows = USERS.filter(u => !q || u.nama.toLowerCase().includes(q) || u.jabatan.toLowerCase().includes(q));
+      document.getElementById('dbAttTable').innerHTML = `
+        <tr><th>Nama</th><th>Jabatan</th><th>Status Hari Ini</th><th>Hadir (2 bln)</th><th>Terlambat</th><th>Tidak Hadir</th><th></th></tr>
+        ${rows.map(u => {
+        const att = getAttendance(u.username);
+        const today = att[0];
+        const hadirList = att.filter(h => h.status === 'hadir');
+        const telat = hadirList.filter(h => h.masuk > '07:30').length;
+        const tidakHadir = att.filter(h => h.status === 'tidak_hadir').length;
+        let statusBadge = today.status === 'hadir' ? `<span class="badge done">Hadir · ${today.masuk}</span>`
+          : today.status === 'libur' ? `<span class="badge wait">Libur</span>`
+            : `<span class="badge issue">Tidak Hadir</span>`;
+        return `<tr>
+            <td>${u.nama}</td><td>${u.jabatan}</td><td>${statusBadge}</td>
+            <td>${hadirList.length}</td><td>${telat}</td><td>${tidakHadir}</td>
+            <td><button class="btn-mini" onclick="dbViewSchedule('${u.username}')">Lihat Jadwal</button></td>
+          </tr>`;
+      }).join('') || '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Tidak ada data</td></tr>'}`;
+    }
+    function dbViewSchedule(username) {
+      const u = USERS.find(x => x.username === username);
+      openModal(`
+        <div class="modal-title">Jadwal & Kehadiran — ${u.nama}</div>
+        <div class="card pad" style="max-height:50vh;overflow-y:auto;padding-top:0;">
+          ${renderCalendarHtml(username)}
+        </div>
+        <div class="card pad" id="calDetail" style="margin-top:16px;font-size:13px;min-height:40px;">Klik salah satu hari pada kalender untuk melihat detail kehadiran.</div>
+        <div class="modal-actions"><button class="btn-sec" onclick="closeModal()">Tutup</button></div>`);
+    }
+
+    // ---------- Laporan — pusat unduh data, termasuk rekap kehadiran seluruh pegawai sekaligus ----------
+    function downloadAllAttendanceCsv() {
+      const rows = [['Nama', 'Username', 'Jabatan', 'Tanggal', 'Status', 'Jam Masuk', 'Jam Keluar', 'Keterangan']];
+      USERS.forEach(u => getAttendance(u.username).forEach(h => rows.push([u.nama, u.username, u.jabatan, h.tgl, h.status, h.masuk || '', h.keluar || '', h.keterangan || ''])));
+      downloadCsv('laporan-kehadiran-semua-pegawai.csv', rows);
+    }
+    function dbLaporan() {
+      return `
+        <div class="db-head"><h1>Laporan</h1></div>
+        <div class="db-table-wrap"><table class="db-table">
+          <tr><th>Laporan</th><th>Keterangan</th><th></th></tr>
+          <tr><td>Produksi</td><td>Semua SPK beserta proyek, tahap, dan progres</td><td><button class="btn-mini" onclick="downloadProduksiCsv()">Unduh CSV</button></td></tr>
+          <tr><td>Stok Gudang</td><td>Semua barang di semua gudang yang bisa Anda akses</td><td><button class="btn-mini" onclick="downloadStokCsv()">Unduh CSV</button></td></tr>
+          <tr><td>Kehadiran Saya</td><td>Riwayat absen akun yang sedang login</td><td><button class="btn-mini" onclick="downloadAbsenCsv()">Unduh CSV</button></td></tr>
+          <tr><td>Kehadiran Semua Pegawai</td><td>Rekap 2 bulan terakhir seluruh pengguna sistem</td><td><button class="btn-mini" onclick="downloadAllAttendanceCsv()">Unduh CSV</button></td></tr>
+        </table></div>`;
     }
 
     // ---------- Init ----------
