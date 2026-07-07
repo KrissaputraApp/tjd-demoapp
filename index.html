@@ -1668,7 +1668,9 @@
     /* ---------- Back-Office (Desktop) ---------- */
     body.desktop-active { display: block; padding: 0; background: #1c1a17; }
     body.desktop-active .phone { display: none; }
-    #desktopShell { display: none; min-height: 100vh; background: #eceae5; flex-direction: column; }
+    /* height (bukan min-height) supaya shell terkunci pas 1 layar — konten yang panjang (tabel dsb)
+       harus scroll di dalam #dbMain sendiri, bukan mendorong seluruh sidebar (dan tombol keluar) turun. */
+    #desktopShell { display: none; height: 100vh; background: #eceae5; flex-direction: column; overflow: hidden; }
     body.desktop-active #desktopShell { display: flex; }
 
     /* Strip judul jendela ala aplikasi desktop asli (traffic-light dots) — supaya beda dari web biasa */
@@ -1694,7 +1696,7 @@
     .db-sidebar-logo { padding: 0 20px 20px; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 10px }
     .db-sidebar-logo .mark { color: var(--honey); font-family: 'Space Grotesk'; font-weight: 700; font-size: 20px }
     .db-sidebar-logo .sub { font-size: 10.5px; color: #8f897c; margin-top: 2px; letter-spacing: .4px; text-transform: uppercase }
-    .db-nav { display: flex; flex-direction: column; gap: 2px; padding: 0 10px; flex: 1 }
+    .db-nav { display: flex; flex-direction: column; gap: 2px; padding: 0 10px; flex: 1; min-height: 0; overflow-y: auto }
     .db-nav button {
       text-align: left; border: none; background: none; padding: 10px 12px; border-radius: 9px;
       font-size: 13px; font-weight: 600; color: #a9a396; cursor: pointer; font-family: 'Inter';
@@ -1723,7 +1725,7 @@
     .db-logout-btn:hover { background: rgba(255,255,255,.08); color: #fff }
 
     /* Konten */
-    .db-content { flex: 1; display: flex; flex-direction: column; min-width: 0 }
+    .db-content { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0 }
     .db-topbar-inner {
       background: #fff; border-bottom: 1px solid var(--line); padding: 12px 28px; display: flex;
       align-items: center; justify-content: space-between; gap: 16px; flex-shrink: 0;
@@ -1891,7 +1893,13 @@
         <!-- ============ GUDANG ============ -->
         <section class="screen" data-screen="gudang">
           <div class="scr-head">
-            <div class="scr-title" data-i18n="gudang_title">Gudang</div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div class="scr-title" data-i18n="gudang_title">Gudang</div>
+              <button class="btn-mini" onclick="downloadStokCsv()" style="display:flex; align-items:center; gap:5px;" title="Download CSV">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                CSV
+              </button>
+            </div>
             <div class="scr-sub" data-i18n="gudang_sub">Stok per lokasi. Nama & kode barang selalu dari master — tidak
               bisa diketik bebas.</div>
           </div>
@@ -1938,7 +1946,6 @@
             <button onclick="setWh(this,'wh_dprri')">DPR RI</button>
           </div>
           <div class="card" id="stockCard"></div>
-          
           <div class="note">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round">
@@ -2029,16 +2036,20 @@
             <div id="checkedInfo"></div>
           </div>
 
-          <div class="sect-label" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;"
-            onclick="openAttendanceHistory()">
-            Riwayat kehadiran
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round">
-              <path d="m9 18 6-6-6-6" />
-            </svg>
+          <div class="sect-label" style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="cursor:pointer;" onclick="openAttendanceHistory()">Riwayat kehadiran</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button class="btn-mini" onclick="event.stopPropagation(); downloadAbsenCsv()" style="display:flex; align-items:center; gap:5px;" title="Download CSV">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                CSV
+              </button>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" style="cursor:pointer;" onclick="openAttendanceHistory()">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </div>
           </div>
           <div class="card pad" id="profileHistory" style="cursor:pointer;" onclick="openAttendanceHistory()"></div>
-          
 
           <button class="btn-sec" onclick="logout()" style="margin-top:16px" data-i18n="btn_logout">Keluar</button>
         </section>
@@ -2853,7 +2864,8 @@
         proyek_title: 'Proyek', proyek_sub: 'Tiap proyek terurai jadi area/kamar, dengan status logistik & progres instalasi.',
         login_tagline: 'Project App — Produksi & Proyek', login_error: 'Username atau password salah.',
         login_username: 'Username', login_password: 'Password', login_submit: 'Masuk', login_quick: 'Atau masuk cepat sebagai:',
-        btn_logout: 'Keluar', nav_beranda: 'Beranda', nav_produksi: 'Produksi', nav_gudang: 'Gudang', nav_proyek: 'Proyek', nav_profil: 'Profil'
+        btn_logout: 'Keluar', nav_beranda: 'Beranda', nav_produksi: 'Produksi', nav_gudang: 'Gudang', nav_proyek: 'Proyek', nav_profil: 'Profil',
+        btn_dl_stok: 'Unduh Laporan Stok (CSV)', btn_dl_absen: 'Unduh Riwayat Absen (CSV)'
       },
       en: {
         produksi_title: 'Production', produksi_sub: 'Track each work order through 6 stages: cutting → assembly → upholstery → finishing → packing → shipping.',
@@ -2861,7 +2873,8 @@
         proyek_title: 'Projects', proyek_sub: 'Each project breaks down into areas/rooms, with logistics status & installation progress.',
         login_tagline: 'Project App — Production & Projects', login_error: 'Incorrect username or password.',
         login_username: 'Username', login_password: 'Password', login_submit: 'Sign In', login_quick: 'Or sign in quickly as:',
-        btn_logout: 'Log out', nav_beranda: 'Home', nav_produksi: 'Production', nav_gudang: 'Warehouse', nav_proyek: 'Projects', nav_profil: 'Profile'
+        btn_logout: 'Log out', nav_beranda: 'Home', nav_produksi: 'Production', nav_gudang: 'Warehouse', nav_proyek: 'Projects', nav_profil: 'Profile',
+        btn_dl_stok: 'Download Stock Report (CSV)', btn_dl_absen: 'Download Attendance History (CSV)'
       }
     };
     let currentLang = 'id';
